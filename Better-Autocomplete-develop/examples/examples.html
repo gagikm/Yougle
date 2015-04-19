@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Better Autocomplete examples</title>
+<link rel="stylesheet" href="../src/better-autocomplete.css" />
+<style>
+body {
+font: 12px 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
+}
+input {
+width: 500px;
+}
+input.fetching {
+background: lightgrey;
+}
+#last-selection {
+font-size: 10px;
+color: green;
+}
+p.warning {
+color: red;
+}
+</style>
+<script src="../lib/jquery-1.7.min.js"></script>
+<script src="../src/jquery.better-autocomplete.js"></script>
+<script>
+var cities = [
+'Stockholm',
+'New York',
+'Oslo',
+'San Fransisco',
+'Säffle',
+'Göteborg',
+'Mogadishu',
+'Washington',
+'Madrid',
+'Paris',
+'Arboga',
+'Moscow'
+];
+var phoneNumbers = [{
+title: '011-234 009 13',
+description: 'James Johnsson'
+}, {
+title: '0177-13 23 14',
+description: 'John Smith'
+}, {
+title: '(+33)-75 078 66',
+description: 'Harry Pretzel'
+}];
+$(document).ready(function() {
+// Local source, string array. Simplest setup possible
+$('#city').betterAutocomplete('init', cities, {}, {});
+// Google style autocomplete
+$('#city-custom').betterAutocomplete('init', cities, { autoHighlight: false }, {
+highlight: function(result, $input, trigger) {
+if (trigger == 'key')
+$input.val(result.title)
+}
+});
+// Local source, results objects array
+$('#color').betterAutocomplete('init', 'json-colors.php', { charLimit: 1 }, {
+select: function(result, $input) { // Custom select callback
+$input.val(result.title);
+$('#last-selection').text('You selected ' + result.title);
+}
+});
+// A remote JSON resource
+$('#geonames').betterAutocomplete('init',
+'http://ws.geonames.org/searchJSON',
+{ cacheLimit: 128, selectKeys: , crossOrigin: true }, {
+processRemoteData: function(data) {
+if ($.type(data) == 'object' && $.isArray(data.geonames))
+return data.geonames;
+else
+return [];
+},
+themeResult: function(result) {
+output = '<h4>' + result.name + '</h4>';
+output += '<p>' + result.countryName + ' <em>(' + result.fclName +
+')</em></p>';
+return output;
+},
+select: function(result, $input) {
+$input.blur();
+window.open('http://maps.google.com/maps?q=' +
+encodeURIComponent(result.name + ', ' + result.countryName),
+'map');
+},
+getGroup: function(result) {
+if ($.type(result.countryName) == 'string' && result.countryName.length)
+return result.countryName;
+}
+});
+// Local source with canonical query callback
+$('#phone').betterAutocomplete('init', phoneNumbers, { charLimit: 0 }, {
+canonicalQuery: function(rawQuery, caseSensitive) {
+// Strip away everything except digits
+var query = rawQuery.replace(/[^\d]/g, '');
+return query;
+},
+// The canonical query will later be used in other callbacks, such as this
+queryLocalResults: function(query, resource, caseSensitive) {
+var results = [];
+$.each(resource, function(i, result) {
+// Compare solely the digits
+if (result.title.replace(/[^\d]/g, '').indexOf(query) >= 0) {
+results.push(result);
+}
+});
+return results;
+}
+});
+});
+</script>
+</head>
+<body>
+<h1>Better Autocomplete demonstration</h1>
+<form>
+<h2>Local source, flat string array, HTML5 search input</h2>
+<label for="city">Please select a city</label><br />
+<input type="search" id="city" name="city" />
+<h2>Same but no auto highlight, custom highlight callback (Google style)</h2>
+<label for="city-custom">Please select another city</label><br />
+<input type="search" id="city-custom" name="city-custom" />
+<h2>Remote source, same origin, array of result objects, custom select callback</h2>
+<p class="warning">
+This is a remote demonstration which requires server-side software. <br />
+You must put the Better Autocomplete files on a PHP web server and access
+<code>example.html</code> via http. See <code>colors-json.php</code>
+</p>
+<label for="color">Please select a color</label><br />
+<input type="text" id="color" name="color" />
+<div id="last-selection">You have not yet selected anything.</div>
+<h2>Remote source, cross origin (geonames.org JSON API), custom select callback</h2>
+<label for="geonames">Find your favourite city!</label><br />
+<input type="text" id="geonames" name="geonames" />
+<h2>Local source, custom canonical query callback</h2>
+<label for="phone">Search for a phone number (try formatting it any way)
+</label><br />
+<input type="text" id="phone" name="phone" />
+</form>
+</body>
+</html> 

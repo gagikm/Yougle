@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<link rel="icon" 
+      type="image/png" 
+      href="img/favicon.png">         
+       <title>Yougle</title> <!-- TODO: Enter your own title.-->
+    <link href="./style/main.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="./Better-Autocomplete-develop/src/better-autocomplete.css" />
+
+    </head>
+            
+    <script src="./js/main.js"></script>
+    <script src="./Better-Autocomplete-develop/lib/jquery-1.7.min.js"></script>
+    <script src="./Better-Autocomplete-develop/src/jquery.better-autocomplete.js"></script>
+
+	<body style="background-color:white;">
+    
+		<div id="spaceAboveLogo" style="margin:0 auto; padding-top:180px; " align="middle">
+            <br>
+<!--
+            <span style="font-size:80px; color:blue;">  Y</span>
+            <span style="font-size:80px; color:red;">   o</span>
+            <span style="font-size:80px; color:orange;">u</span>
+            <span style="font-size:80px; color:blue;">  g</span>
+            <span style="font-size:80px; color:green;"> l</span>
+            <span style="font-size:80px; color:red;">   e</span><br>
+-->
+            <img id="logo" src="img/yougle.png" width="228">
+        </div>
+        
+        <div id="searchbar" align="middle" style="padding-top: 20px;">
+            <input onkeypress="searchKeyPress(event);" id="search" type="search" name="search" style="margin:0 auto; width:480px; height:28px">
+        </div>
+        
+        <div id="buttons" align="middle" style="padding-top: 20px;">
+            <button onclick="f('youglesearch');" id="youglesearch">Yougle Search</button><button onclick="showall();">Suggestions</button><!--TODO: Replace with your own search button label-->
+        </div>
+        <br>
+
+    </body>
+        
+        <script>
+
+var suggestions = [
+  '|Projects',
+  '|Education',
+  '|Email',
+  '|LinkedIn',
+  '|GitHub',
+  '|Facebook',
+  '|Twitter',
+  '|Full Name'
+];
+
+$(window).resize(function() {
+    
+    if ($(window).width() < 500) {
+        document.getElementById("logo").style.width='60%';
+        document.getElementById("search").style.width='90%';                            
+        document.getElementById("spaceAboveLogo").style.padding = "100px 0 0 0";
+
+        }
+    else {
+         document.getElementById("logo").style.width="228px";
+         document.getElementById("search").style.width="480px";
+        document.getElementById("spaceAboveLogo").style="padding-top:180px";
+
+         
+        }
+});
+            
+            
+$(document).ready(function(){
+        if ($(window).width() < 500) {
+        document.getElementById("logo").style.width='60%';
+        document.getElementById("search").style.width='90%';
+        document.getElementById("spaceAboveLogo").style.padding = "100px 0 0 0";
+        }
+    else {
+        document.getElementById("logo").style.width="228px";                    
+        document.getElementById("search").style.width="480px";
+        document.getElementById("spaceAboveLogo").style="padding-top:180px";
+
+        }
+  // Local source, string array. Simplest setup possible
+  $('#dd').betterAutocomplete('init', suggestions, {}, {});
+
+  // Google style autocomplete
+  $('#search').betterAutocomplete('init', suggestions, { autoHighlight: false }, {
+    highlight: function(result, $input, trigger) {
+      if (trigger == 'key')
+        $input.val(result.title)
+    }
+  });
+
+  // Local source, results objects array
+  $('#color').betterAutocomplete('init', 'json-colors.php', { charLimit: 1 }, {
+    select: function(result, $input) { // Custom select callback
+      $input.val(result.title);
+      $('#last-selection').text('You selecteds ' + result.title);
+    }
+  });
+
+  // A remote JSON resource
+  $('#geonames').betterAutocomplete('init',
+      'http://ws.geonames.org/searchJSON',
+      { cacheLimit: 128, selectKeys: [13], crossOrigin: true }, {
+    processRemoteData: function(data) {
+      if ($.type(data) == 'object' && $.isArray(data.geonames))
+        return data.geonames;
+      else
+        return [];
+    },
+    themeResult: function(result) {
+      output = '<h4>' + result.name + '</h4>';
+      output += '<p>' + result.countryName + ' <em>(' + result.fclName +
+                ')</em></p>';
+      return output;
+    },
+    select: function(result, $input) {
+      $input.blur();
+      window.open('http://maps.google.com/maps?q=' +
+                  encodeURIComponent(result.name + ', ' + result.countryName),
+                  'map');
+    },
+    getGroup: function(result) {
+      if ($.type(result.countryName) == 'string' && result.countryName.length)
+        return result.countryName;
+    }
+  });
+
+  // Local source with canonical query callback
+  $('#phone').betterAutocomplete('init', phoneNumbers, { charLimit: 0 }, {
+    canonicalQuery: function(rawQuery, caseSensitive) {
+      // Strip away everything except digits
+      var query = rawQuery.replace(/[^\d]/g, '');
+      return query;
+    },
+    // The canonical query will later be used in other callbacks, such as this
+    queryLocalResults: function(query, resource, caseSensitive) {
+      var results = [];
+        
+      $.each(resource, function(i, result) {
+        // Compare solely the digits
+         if (result.title.replace(/[^\d]/g, '').indexOf(query) >= 0) {
+           results.push(result);
+         }
+      });
+      return results;
+    }
+  });
+
+});
+
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49234069-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>
