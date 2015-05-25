@@ -64,13 +64,13 @@ function f(id){
         break;
     case "birthday":
     case "|birthday":
-        document.getElementsByTagName("body")[0].style = "background-image:url('http://hdwallpaper.freehdw.com/0007/3d-abstract_hdwallpaper_flower-field_62438.jpg'); background-fit:contain";
+        document.getElementsByTagName("body")[0].style = "background-image:url('img/birthday.png'); background-size:cover";
         document.getElementById("search").value = "January 1";
                         <!--TODO:Replace with your birthday.-->
         break;
     case "education": case "school": case "university": case "college": case "ucla":
     case "|education": case "|school": case "|university": case "|college": case "|ucla":
-        document.getElementsByTagName("body")[0].style = "background-image:url('https://c1.staticflickr.com/9/8092/8390742042_c2788e2f44_b.jpg'); background-size:100%";
+        document.getElementsByTagName("body")[0].style = "background-image:url('img/ucla.png'); background-size:100%";
         document.getElementById("search").value = "University of California, Los Angeles";
         break;
     case "university of california, los angeles":
