@@ -33,7 +33,11 @@ button:active {
     color: #000;
     border-color: #444;
 }
-
+body
+{
+    width:500px;
+    margin:0 auto;
+}
 
 
 
