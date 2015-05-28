@@ -35,7 +35,7 @@ function f(id){
     case "linkedin":
     case "|linkedin":
             window.location.href = 'http://linkedin.com/';
-            <!--TODO:Replace with link to your LinkedIn profile.-->
+                        // TODO:Replace with link to your LinkedIn profile.
             break;
     case "resume":  
     case "|resume":  
@@ -43,30 +43,31 @@ function f(id){
         break;
     case "press enter to download resume [ pdf ]":
         window.location.href = 'https://www.dropbox.com';
-                        <!--TODO:Replace with link to your Resumé.-->
+                        // TODO:Replace with link to your Resumé.
         break;
     case "facebook":
     case "|facebook":
         window.location.href = 'http://facebook.com/';
-                        <!--TODO:Replace with link to your Facebook profile.-->
+                        //TODO:Replace with link to your Facebook profile.
         break;
     case "projects":
     case "|projects":
     case "github": 
     case "|github": 
         window.location.href = 'http://github.com/';
-                        <!--TODO:Replace with link to your GitHub profile.-->
+                        //TODO:Replace with link to your GitHub profile.
         break;
     case "twitter":
     case "|twitter":
         window.location.href = 'http://twitter.com/';
-                        <!--TODO:Replace with link to your Twitter account.-->
+                        //TODO:Replace with link to your Twitter account.
         break;
     case "birthday":
     case "|birthday":
         document.getElementsByTagName("body")[0].style = "background-image:url('img/birthday.png'); background-size:cover";
+                        //TODO: Replace 'img/birthay.png' with link to your own background image.
         document.getElementById("search").value = "January 1";
-                        <!--TODO:Replace with your birthday.-->
+                        //TODO:Replace with your birthday.
         break;
     case "education": case "school": case "university": case "college": case "ucla":
     case "|education": case "|school": case "|university": case "|college": case "|ucla":
@@ -89,22 +90,22 @@ function f(id){
     case "full name": 
     case "|full name": 
             document.getElementById("search").value = "Joe Bruin";
-                        <!--TODO:Replace with your own name.-->
+                        //TODO:Replace with your own name.
             break;
     case "email": case "send email": case "contact":
     case "|email": case "|send email": case "|contact":
             window.location.href = 'mailto:joebruin@ucla.edu';
-                        <!--TODO:Replace with your own email address.-->
+                        //TODO:Replace with your own email address.
             break;
     case "clappy bear": case "clappybear":
     case "|clappy bear": case "|clappybear":
             window.location.href = 'http://gagikm.github.io/clappybear';
             break;
-            <!--TODO: Replace with your own project.-->
+                        //TODO: Replace with your own project.
     default:
         var val = document.getElementById("search").value;
         window.location.href ='https://www.google.com/?gws_rd=ssl#q='+'Joe Bruin:  '+val;
-                        <!--TODO:Replace with your own name.-->
+                        //TODO:Replace with your own name.
             break;
             
 } 
