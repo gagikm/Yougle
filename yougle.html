@@ -3,9 +3,10 @@
     <head>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
 
-<link rel="icon" 
+<!-- <link rel="icon" 
       type="image/png" 
-      href="img/favicon.png">         
+      href="img/favicon.png">   -->       
+
        <title>Yougle</title> <!-- TODO: Enter your own title.-->
     <link href="./style/main.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="./Better-Autocomplete-develop/src/better-autocomplete.css" />
@@ -39,7 +40,7 @@
         </div>
         
         <div id="searchbar" align="middle" style="padding-top: 20px;">
-            <input onkeypress="searchKeyPress(event);" id="search" type="search" name="search" style="margin:0 auto; width:480px; height:28px">
+            <input onkeypress="searchKeyPress(event);" id="search" type="text" name="search" style="margin:0 auto; width:480px; line-height:2.5em">
         </div>
         
         <div id="buttons" align="middle" style="padding-top: 20px;">
@@ -70,6 +71,8 @@ window.mobilecheck = function() {
 var is_mobile = window.mobilecheck();
 
 $(window).resize(function() {
+          window.location.href = window.location.href;
+
     var wi = $(window).width();
          if ((wi < 500 && wi > 400)) {
           document.body.style.width="400px";
@@ -109,8 +112,8 @@ $(window).resize(function() {
             
             
 $(document).ready(function(){
-    var wi = $(window).width();
-                 if ((wi < 500 && wi > 400)) {
+        var wi = $(window).width();
+        if ((wi < 500 && wi > 400)) {
           document.body.style.width="400px";
           document.getElementById("logo").style.width='60%';
           document.getElementById("search").style.width='95%';
