@@ -896,7 +896,7 @@ var defaultCallbacks = {
    *   The canonical query associated with this string.
    */
   canonicalQuery: function(rawQuery, caseSensitive) {
-    var query = $.trim(rawQuery);
+     var query = rawQuery; //$.trim(rawQuery);
     if (!caseSensitive) {
       query = query.toLowerCase();
     }
